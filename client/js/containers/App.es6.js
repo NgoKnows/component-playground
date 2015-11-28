@@ -7,9 +7,7 @@ import DatePicker from 'components/DatePicker/DatePicker'
 
 class App extends Component {
     render() {
-        const { dispatch, ...other } = this.props;
-
-        const boundActions = bindActionCreators(actions, dispatch);
+        const { actions, ...other } = this.props;
 
         return (
             <div style={STYLES}>
@@ -27,6 +25,12 @@ function mapStateToProps(state) {
     };
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        actions : bindActionCreators(actions, dispatch)
+    };
+};
+
 const STYLES = {};
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);
