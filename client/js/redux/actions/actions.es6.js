@@ -1,15 +1,49 @@
-import { ADD_TODO } from '../constants/constants.es6'
-import Immutable from 'immutable'
+import { CHANGE_DAY, CHANGE_MONTH, CHANGE_YEAR } from '../constants/constants.es6'
+import { batchActions } from 'redux-batched-actions';
+import moment from 'moment'
 
-export function addTodo(todo) {
+export function changeDay(day) {
     return {
-        type: ADD_TODO,
-        rover
+        type: CHANGE_DAY,
+        day
     }
 }
 
-export function thunk(blah) {
+export function changeMonth(month) {
+    return {
+        type: CHANGE_MONTH,
+        month
+    }
+}
+
+export function changeYear(year) {
+    return {
+        type: CHANGE_YEAR,
+        year
+    }
+}
+
+export function changeDate(month, day) {
     return (dispatch, getState) => {
-        //do stuff
+        let dateActions = [];
+        const date = moment([getState().get('year'), month]);
+        const lastDay = date.endOf('month').date();
+
+        if (month > 11) {
+            dateActions.push(changeYear(getState().get('year') + 1))
+            dateActions.push(changeMonth(0));
+        } else if (month < 0) {
+            dateActions.push(changeYear(getState().get('year') - 1))
+            dateActions.push(changeMonth(11));
+        } else {
+            dateActions.push(changeMonth(month));
+            dateActions.push(changeDay(day));
+        }
+
+        if(getState().get('day') > lastDay) {
+            dateActions.push(changeDay(lastDay));
+        }
+
+        dispatch(batchActions(dateActions));
     }
 }

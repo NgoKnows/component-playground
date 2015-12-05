@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react'
 
 //REDUX
 import thunk from 'redux-thunk';
+import { enableBatching } from 'redux-batched-actions';
 import { Provider } from 'react-redux';
 import { compose, createStore, applyMiddleware } from 'redux';
+
 import Reducer from 'flux/reducers/reducer'
 
 //DEV TOOLS
@@ -18,7 +20,7 @@ const finalCreateStore = compose(
     devTools()
 )(createStore);
 
-const store = finalCreateStore(Reducer);
+const store = finalCreateStore(enableBatching(Reducer));
 
 export default class Root extends Component {
     render() {
@@ -27,9 +29,6 @@ export default class Root extends Component {
                 <Provider store={store}>
                     <App />
                 </Provider>
-                <DebugPanel top right bottom>
-                    <DevTools store={store} monitor={LogMonitor} />
-                </DebugPanel>
             </div>
         )
     }

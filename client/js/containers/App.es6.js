@@ -11,7 +11,7 @@ class App extends Component {
 
         return (
             <div style={STYLES}>
-                <DatePicker />
+                <DatePicker actions={actions} {...this.props} />
             </div>
         )
     }
@@ -21,7 +21,9 @@ App.propTypes = {};
 
 function mapStateToProps(state) {
     return {
-        blah : state.get('blah')
+        day : state.get('day'),
+        month : state.get('month'),
+        year: state.get('year')
     };
 }
 
@@ -31,6 +33,11 @@ function mapDispatchToProps(dispatch) {
     };
 };
 
-const STYLES = {};
+const STYLES = {
+    backgroundColor: '#1B5E20',
+    padding: '3rem',
+    display: 'flex',
+    justifyContent: 'center'
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
