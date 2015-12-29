@@ -25,6 +25,7 @@ export default class Calendar extends Component {
             </div>
         );
     }
+
     makeCalendar() {
         const { year, month, day, handleDayClick } = this.props;
 

@@ -17,7 +17,8 @@ module.exports = {
             classes: path.join(ROOT_DIR, 'client', 'js', 'classes'),
             components: path.join(ROOT_DIR, 'client', 'js', 'components'),
             flux: path.join(ROOT_DIR, 'client', 'js', 'redux'),
-            js: path.join(ROOT_DIR, 'client', 'js')
+            js: path.join(ROOT_DIR, 'client', 'js'),
+            animations: path.join(ROOT_DIR, 'client', 'js', 'animations')
         }
     },
 

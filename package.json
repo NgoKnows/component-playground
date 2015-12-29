@@ -1,7 +1,7 @@
 {
-  "name": "3rek",
+  "name": "component-playground",
   "version": "1.0.0",
-  "description": "boilerplate for app using React, Redux, RethinkDB, and Koa",
+  "description": "minimal setup to test react components",
   "main": "webpack.config.js",
   "scripts": {
     "build": "npm run clean && npm run build:webpack",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NgoKnows/3REK.git"
+    "url": "git+https://github.com/NgoKnows/component-playground.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/NgoKnows/3REK/issues"
+    "url": "https://github.com/NgoKnows/component-playground/issues"
   },
-  "homepage": "https://github.com/NgoKnows/3REK#readme",
+  "homepage": "https://github.com/NgoKnows/component-playground#readme",
   "dependencies": {
     "immutable": "^3.7.5",
     "koa": "^1.1.0",
@@ -32,7 +32,8 @@
     "redux": "3.0.2",
     "redux-batched-actions": "^0.1.1",
     "redux-logger": "2.0.3",
-    "redux-thunk": "1.0.0"
+    "redux-thunk": "1.0.0",
+    "velocity-react": "^1.1.1"
   },
   "devDependencies": {
     "babel": "^5.5.8",

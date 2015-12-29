@@ -19,19 +19,22 @@ export default class DatePicker extends Component {
                 />
                 <Calendar
                     handleDayClick={(newMonth, newDay) => actions.changeDate(newMonth, newDay)}
-                    {...this.props}/>
+                    {...this.props}
+                />
             </div>
         );
     }
 }
 
 const STYLES = {
-    width: '22rem',
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    fontFamily: "'Roboto', 'sans-serif'",
+    fontSize: '16px',
+    width: '22rem'
 }
 
-//const now = moment();
+const now = moment();
 
 DatePicker.propTypes = {
     day: PropTypes.number,
@@ -39,8 +42,8 @@ DatePicker.propTypes = {
     year: PropTypes.number
 };
 
-//DatePicker.defaultProps = {
-//    day: now.date(),
-//    month: now.month(),
-//    year: now.year()
-//};
+DatePicker.defaultProps = {
+    day: now.date(),
+    month: now.month(),
+    year: now.year()
+};
