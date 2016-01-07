@@ -11,7 +11,7 @@ class App extends Component {
 
         return (
             <div style={STYLES}>
-                <DatePicker actions={actions} {...this.props} />
+                <DatePicker handleChangeDate={actions.changeDate} {...this.props} />
             </div>
         )
     }

@@ -54,7 +54,15 @@ const STYLES = {
     }
 }
 
-Day.propTypes = {};
+Day.propTypes = {
+    day            : PropTypes.number.isRequired,
+    differentMonth : PropTypes.bool,
+    handleClick    : PropTypes.func,
+    selected       : PropTypes.bool
+};
+
 Day.defaultProps = {
-    differentMonth: false
+    differentMonth : false,
+    handleClick    : () => {},
+    selected       : false
 };

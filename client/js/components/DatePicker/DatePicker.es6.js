@@ -9,16 +9,15 @@ import DateHeader from './DateHeader.es6'
 @Radium
 export default class DatePicker extends Component {
     render() {
-        const { day, month, year, actions } = this.props;
+        const { day, month, year, handleChangeDate } = this.props;
         return (
             <div style={STYLES}>
                 <DateHeader
-                    handleMonthBackward={() => actions.changeDate(month - 1, day)}
-                    handleMonthForward={() => actions.changeDate(month + 1, day)}
+                    handleChangeDate={handleChangeDate}
                     {...this.props}
                 />
                 <Calendar
-                    handleDayClick={(newMonth, newDay) => actions.changeDate(newMonth, newDay)}
+                    handleChangeDate={handleChangeDate}
                     {...this.props}
                 />
             </div>
@@ -27,23 +26,25 @@ export default class DatePicker extends Component {
 }
 
 const STYLES = {
-    display: 'flex',
-    flexDirection: 'column',
-    fontFamily: "'Roboto', 'sans-serif'",
-    fontSize: '16px',
-    width: '22rem'
+    display       : 'flex',
+    flexDirection : 'column',
+    fontFamily    : "'Roboto', 'sans-serif'",
+    fontSize      : '16px',
+    width         : '22rem'
 }
 
 const now = moment();
 
 DatePicker.propTypes = {
-    day: PropTypes.number,
-    month: PropTypes.number,
-    year: PropTypes.number
+    day              : PropTypes.number,
+    month            : PropTypes.number,
+    year             : PropTypes.number,
+    handleDateChange : PropTypes.func
 };
 
 DatePicker.defaultProps = {
-    day: now.date(),
-    month: now.month(),
-    year: now.year()
+    day              : now.date(),
+    month            : now.month(),
+    year             : now.year(),
+    handleDateChange : () => {}
 };

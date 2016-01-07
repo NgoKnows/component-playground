@@ -23,26 +23,31 @@ export function changeYear(year) {
     }
 }
 
-export function changeDate(month, day) {
+export function changeDate(year, month, day) {
     return (dispatch, getState) => {
         let dateActions = [];
-        const date = moment([getState().get('year'), month]);
-        const lastDay = date.endOf('month').date();
 
-        if (month > 11) {
-            dateActions.push(changeYear(getState().get('year') + 1))
-            dateActions.push(changeMonth(0));
-        } else if (month < 0) {
-            dateActions.push(changeYear(getState().get('year') - 1))
-            dateActions.push(changeMonth(11));
-        } else {
-            dateActions.push(changeMonth(month));
-            dateActions.push(changeDay(day));
-        }
-
-        if(getState().get('day') > lastDay) {
-            dateActions.push(changeDay(lastDay));
-        }
+        dateActions.push(changeYear(year));
+        dateActions.push(changeMonth(month));
+        dateActions.push(changeDay(day));
+        //let dateActions = [];
+        //const date = moment([year, month]);
+        //const lastDay = date.endOf('month').date();
+        //
+        //if (month > 11) {
+        //    dateActions.push(changeYear(getState().get('year') + 1))
+        //    dateActions.push(changeMonth(0));
+        //} else if (month < 0) {
+        //    dateActions.push(changeYear(getState().get('year') - 1))
+        //    dateActions.push(changeMonth(11));
+        //} else {
+        //    dateActions.push(changeMonth(month));
+        //    dateActions.push(changeDay(day));
+        //}
+        //
+        //if(getState().get('day') > lastDay) {
+        //    dateActions.push(changeDay(lastDay));
+        //}
 
         dispatch(batchActions(dateActions));
     }

@@ -5,8 +5,31 @@ import moment from 'moment'
 
 @Radium
 export default class DateHeader extends Component {
+    handleChangeMonth(newMonth) {
+        const { day, month, year } = this.props;
+        const date = moment([year, newMonth]);
+        const lastDay = date.endOf('month').date();
+
+        let newDay = day;
+        let newYear = year;
+
+        if (newMonth > 11) {
+            newYear = year + 1
+            newMonth = 0;
+        } else if (month < 0) {
+            newYear = year - 1
+            newMonth = 11
+        }
+
+        if(day > lastDay) {
+            newDay = lastDay;
+        }
+
+        this.props.handleChangeDate(newYear, newMonth, newDay);
+    }
+
     render() {
-        const { day, month, year, handleMonthForward, handleMonthBackward } = this.props;
+        const { day, month, year } = this.props;
         const date = moment([year, month, day]);
 
         const dayName = date.format('dddd');
@@ -22,14 +45,14 @@ export default class DateHeader extends Component {
                     </div>
                 </div>
                 <div style={STYLES.select}>
-                    <div style={STYLES.arrowWrapper} onClick={handleMonthBackward}>
+                    <div style={STYLES.arrowWrapper} onClick={() => this.handleChangeMonth(month - 1)}>
                         <object style={[STYLES.leftArrow, STYLES.arrow]} data="imgs/arrow.svg" type="image/svg+xml"/>
                         <div style={STYLES.cover}></div>
                     </div>
                     <div style={STYLES.month} key={monthName}>
                         {monthName.toUpperCase()}
                     </div>
-                    <div style={STYLES.arrowWrapper} onClick={handleMonthForward}>
+                    <div style={STYLES.arrowWrapper} onClick={() => this.handleChangeMonth(month + 1)}>
                         <object style={STYLES.arrow} data="imgs/arrow.svg" type="image/svg+xml" />
                         <div style={STYLES.cover}></div>
                     </div>
@@ -116,9 +139,14 @@ const STYLES = {
 }
 
 DateHeader.propTypes = {
-    day: PropTypes.number.isRequired,
-    month: PropTypes.number.isRequired,
-    year: PropTypes.number.isRequired
+    day                  : PropTypes.number.isRequired,
+    month                : PropTypes.number.isRequired,
+    year                 : PropTypes.number.isRequired,
+    handleMonthBackwards : PropTypes.func,
+    handleMonthForward   : PropTypes.func
 };
 
-DateHeader.defaultProps = {};
+DateHeader.defaultProps = {
+    handleMonthBackwards : () => {},
+    handleMonthForward   : () => {}
+};

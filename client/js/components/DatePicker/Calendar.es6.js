@@ -8,7 +8,30 @@ import Day from './Day'
 
 @Radium
 export default class Calendar extends Component {
-    render() {
+
+        handleChangeDay(newMonth, newDay) {
+            const { day, month, year } = this.props;
+            const date = moment([year, newMonth]);
+            const lastDay = date.endOf('month').date();
+
+            let newYear = year;
+
+            if (newMonth > 11) {
+                newYear = year + 1
+                newMonth = 0;
+            } else if (month < 0) {
+                newYear = year - 1
+                newMonth = 11
+            }
+
+            if(day > lastDay) {
+                newDay = lastDay;
+            }
+
+            this.props.handleChangeDate(newYear, newMonth, newDay);
+        }
+
+        render() {
         const calendarArray = this.makeCalendar();
         return (
             <div style={STYLES.container}>
@@ -27,7 +50,7 @@ export default class Calendar extends Component {
     }
 
     makeCalendar() {
-        const { year, month, day, handleDayClick } = this.props;
+        const { year, month, day } = this.props;
 
         //moment object first day of the month
         const date = moment([year, month]);
@@ -48,7 +71,7 @@ export default class Calendar extends Component {
 
                 calendarArray[0][i] =
                     <Day
-                        handleClick={handleDayClick.bind(this, month - 1, prevMonthDay)}
+                        handleClick={this.handleChangeDay.bind(this, month - 1, prevMonthDay)}
                         key={i}
                         day={prevMonthDay}
                         differentMonth={true}
@@ -58,7 +81,7 @@ export default class Calendar extends Component {
 
                 calendarArray[0][i] =
                     <Day
-                        handleClick={handleDayClick.bind(this, month, curMonthDay)}
+                        handleClick={this.handleChangeDay.bind(this, month, curMonthDay)}
                         key={i}
                         day={curMonthDay}
                         selected={i - beginningDay + 1 === day}
@@ -73,7 +96,7 @@ export default class Calendar extends Component {
                 if (curDay <= endDay) {
                     calendarArray[weekIndex][dayIndex] =
                         <Day
-                            handleClick={handleDayClick.bind(this, month, curDay)}
+                            handleClick={this.handleChangeDay.bind(this, month, curDay)}
                             key={(weekIndex * 7) + (dayIndex)}
                             day={curDay}
                             selected={curDay === day}
@@ -81,7 +104,7 @@ export default class Calendar extends Component {
                 } else {
                     calendarArray[weekIndex][dayIndex] =
                         <Day
-                            handleClick={handleDayClick.bind(this, month + 1, curDay - endDay)}
+                            handleClick={this.handleChangeDay.bind(this, month + 1, curDay - endDay)}
                             key={(weekIndex * 7) + (dayIndex)}
                             day={curDay - endDay}
                             selected={false}
@@ -132,7 +155,12 @@ const STYLES = {
 }
 
 Calendar.propTypes = {
-    day: PropTypes.number.isRequired,
-    month: PropTypes.number.isRequired,
-    year: PropTypes.number.isRequired
+    day            : PropTypes.number.isRequired,
+    month          : PropTypes.number.isRequired,
+    year           : PropTypes.number.isRequired,
+    handleDayClick : PropTypes.func
 };
+
+Calendar.defaultProps = {
+    handleDayClick : () => {}
+}
